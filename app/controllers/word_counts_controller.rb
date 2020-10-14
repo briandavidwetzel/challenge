@@ -4,13 +4,12 @@ class WordCountsController < ApplicationController
     id = params.require(:id)
     message = params.require(:message)
 
-    word_count_service = WordCountService.new(id: id, message: message)
-    count = word_count_service.count
+    total_count = WordCountService.total_count(id: id, message: message)
 
-    if count.present?
+    if total_count.present?
       render(
         json: {
-          count: count
+          count: total_count
         },
         status: :created
       )

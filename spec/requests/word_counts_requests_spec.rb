@@ -13,18 +13,17 @@ RSpec.describe WordCountsController do
 
     context 'when the id has been sent before' do
       let(:word_count_service) { instance_double(WordCountService) }
-      let(:count) { nil }
+      let(:total_count) { nil }
 
       let(:expected_response) do
         ' '
       end
 
       it 'renders the count calculated by the WordCountService' do
-        expect(WordCountService).to receive(:new).with(
+        expect(WordCountService).to receive(:total_count).with(
           id: id,
           message: message
-        ).and_return(word_count_service)
-        expect(word_count_service).to receive(:count).and_return(count)
+        ).and_return(total_count)
 
         post(word_counts_path, params: params)
 
@@ -35,20 +34,19 @@ RSpec.describe WordCountsController do
 
     context 'when the id has not been sent before' do
       let(:word_count_service) { instance_double(WordCountService) }
-      let(:count) { 'some_count' }
+      let(:total_count) { 'some_count' }
 
       let(:expected_response) do
         {
-          count: count
+          count: total_count
         }
       end
 
       it 'renders the count calculated by the WordCountService' do
-        expect(WordCountService).to receive(:new).with(
+        expect(WordCountService).to receive(:total_count).with(
           id: id,
           message: message
-        ).and_return(word_count_service)
-        expect(word_count_service).to receive(:count).and_return(count)
+        ).and_return(total_count)
 
         post(word_counts_path, params: params)
 
